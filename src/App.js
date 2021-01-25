@@ -1,11 +1,14 @@
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import Home from './views/Home'
+import Albums from './views/Albums'
 
-function App() {
-  return (
-    <div className="App">
-        Virtual Record Shelf
-    </div>
-  );
-}
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route path='/' component={Home} exact />
+      <Route path='/albums' component={Albums} />
+    </Switch>
+  </BrowserRouter>
+)
 
-export default App;
+export default App
