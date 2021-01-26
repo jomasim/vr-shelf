@@ -2,11 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import AlbumCard from '../../components/AlbumCard'
 import AlbumModal from '../../components/AlbumModal'
+import Empty from '../../components/Empty'
 import { fetchAlbums } from '../../actions/albums'
 
 const AlbumListing = () => {
   const dispatch = useDispatch()
-  const { data: albums, loading } = useSelector(state => state.albums)
+  const { data: albums } = useSelector(state => state.albums)
   useEffect(() => {
     dispatch(fetchAlbums())
   }, [dispatch])
@@ -16,9 +17,11 @@ const AlbumListing = () => {
         <h3>Albums</h3>
         <AlbumModal />
       </div>
-      {loading
-        ? 'Loading data...'
-        : albums.map(album => <AlbumCard key={album.id} data={album} />)}
+      {albums.length ? (
+        albums.map(album => <AlbumCard key={album.id} data={album} />)
+      ) : (
+        <Empty />
+      )}
     </div>
   )
 }

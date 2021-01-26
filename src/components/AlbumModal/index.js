@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Button, Input, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { addAlbum } from '../../actions/albums'
+import { fetchArtists } from '../../actions/artists'
 
 const { Option } = Select
 
@@ -10,14 +11,19 @@ const AlbumModal = () => {
 
   const [visible, setVisible] = useState(false)
   const [name, setName] = useState('')
-  const [artist, setArtist] = useState('')
+  const [artistId, setArtist] = useState('')
 
   const { loading, success } = useSelector(state => state.addAlbum)
+  const { loading: loadingArtists, data } = useSelector(state => state.artists)
 
   const clear = () => {
     setVisible(false)
     setName('')
   }
+
+  useEffect(() => {
+    dispatch(fetchArtists())
+  }, [dispatch])
 
   useEffect(() => {
     if (success) {
@@ -29,11 +35,16 @@ const AlbumModal = () => {
     clear()
   }
   const handleSubmit = () => {
-    dispatch(addAlbum({ name, artist }))
+    dispatch(addAlbum({ name, artistId }))
   }
 
-  const handleChange = ({ target }) => {
-    setName(target.value)
+  const handleNameChange = ({ target }) => {
+    const { value } = target
+    setName(value)
+  }
+
+  const handleArtistChange = val => {
+    setArtist(val)
   }
 
   return (
@@ -62,16 +73,23 @@ const AlbumModal = () => {
       >
         <Input
           placeholder='name'
+          name='name'
           value={name}
-          onChange={evt => handleChange(evt)}
+          onChange={evt => handleNameChange(evt)}
         />
         <Select
-          defaultValue='john doe'
+          defaultValue='Choose artist'
           style={{ width: '100%', marginTop: 20 }}
-          onChange={handleChange}
+          onChange={val => handleArtistChange(val)}
+          loading={loadingArtists}
+          name='artist'
         >
-          <Option value='john doe'>Jack</Option>
-          <Option value='jane doe'>Lucy</Option>
+          {data.length &&
+            data.map(artist => (
+              <Option key={artist.id} value={artist.id}>
+                {artist.name}
+              </Option>
+            ))}
         </Select>
       </Modal>
     </div>

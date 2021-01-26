@@ -16,7 +16,7 @@ export const fetchAlbums = () => dispatch => {
 export const addAlbum = payload => dispatch => {
   dispatch({ type: types.ADD_ALBUM, payload })
   api
-    .addArtist(payload)
+    .addAlbum(payload)
     .then(res => {
       dispatch({ type: types.ADD_ALBUM_SUCCESS, payload: res.data })
       dispatch(fetchAlbums())

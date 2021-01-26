@@ -2,11 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ArtistCard from '../../components/ArtistCard'
 import ArtistModal from '../../components/ArtistModal'
+import Empty from '../../components/Empty'
 import { fetchArtists } from '../../actions/artists'
 
 const ArtistListing = () => {
   const dispatch = useDispatch()
-  const { data: artists, loading } = useSelector(state => state.artists)
+  const { data: artists } = useSelector(state => state.artists)
   useEffect(() => {
     dispatch(fetchArtists())
   }, [dispatch])
@@ -17,9 +18,11 @@ const ArtistListing = () => {
         <ArtistModal />
       </div>
 
-      {loading
-        ? 'Loading'
-        : artists.map(artist => <ArtistCard key={artist.id} data={artist} />)}
+      {artists.length ? (
+        artists.map(artist => <ArtistCard key={artist.id} data={artist} />)
+      ) : (
+        <Empty />
+      )}
     </div>
   )
 }
