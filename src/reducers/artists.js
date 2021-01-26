@@ -3,6 +3,7 @@ import {
   FETCH_ARTISTS_SUCCESS,
   FETCH_ARTISTS_ERROR
 } from '../types/artists'
+
 const INITIAL_STATE = {
   data: [],
   loading: false
