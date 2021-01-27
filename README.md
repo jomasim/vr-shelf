@@ -11,6 +11,10 @@ In the project directory, you can run:
 install dependencies
 ### `npm install`
 
+### configurations
+add REACT_API_URL in .env file 
+for development you can use: REACT_APP_API_URL =http://localhost:8080
+
 run project
 ### `npm demo-ui`
 
