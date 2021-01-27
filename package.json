@@ -14,7 +14,7 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "demo-ui": "react-scripts start",
     "build": "react-scripts build"
   },
   "eslintConfig": {
